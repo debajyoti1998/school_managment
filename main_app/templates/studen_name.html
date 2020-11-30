@@ -1,0 +1,24 @@
+<html>
+<head>
+<style>
+
+</style>
+</head>
+<body>
+<div class="media">
+    {% for a in data %}
+        <tr>
+        
+            <td>{{ a['stu_id']}}</td>
+            
+         <h1>  <td>class:{{ a['stu_class']}}</td> <h1><br>
+           <h2 class="mt-0"><td>student name:{{ a['stu_name']}} <input type="checkbox" class="form-check-input" id="exampleCheck1" name="attandance"></td></h2>
+
+        </tr>
+    {% endfor %}
+</div>
+    
+  
+
+</body>
+</html>
