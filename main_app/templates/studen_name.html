@@ -1,4 +1,6 @@
-<html>
+<html style="
+background-color:skyblue;
+">
 <head>
 <style>
 
@@ -7,14 +9,7 @@
 <body>
 <div class="media">
     {% for a in data %}
-        <tr>
-        
-            <td>{{ a['stu_id']}}</td>
-            
-         <h1>  <td>class:{{ a['stu_class']}}</td> <h1><br>
-           <h2 class="mt-0"><td>student name:{{ a['stu_name']}} <input type="checkbox" class="form-check-input" id="exampleCheck1" name="attandance"></td></h2>
-
-        </tr>
+       <h2><p> student name:  <a href="/student/{{ a['stu_id']}}"> {{ a['stu_name']}} </a> </p></h2> 
     {% endfor %}
 </div>
     

@@ -4,6 +4,46 @@
         box-sizing: border-box;
 }
 
-header{
+.colorful{
         background-color: aqua;
+        border: 2px solid;
 }
+
+.beauty{
+        height: 100vh;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-image: url(./images/nature.jpg);
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        user-select: none;
+}
+.h1, h1 {
+        color: red;
+        text-align: center;
+        font-size: 50px;
+        
+}
+
+label {
+        display: inline-block;
+        margin-bottom: .5rem;
+        color: gold;
+    }
+
+
+
+.beauti{
+        background-image: url(./images/study.jpg)
+    }
+
+body{
+        background-image: url(./images/im.jpg);
+    }
+.h2, h2 {
+        font-size: 2rem;
+        color: red;
+        text-align: center;
+
+    }

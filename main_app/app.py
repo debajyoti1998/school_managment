@@ -2,6 +2,7 @@ from flask import Flask ,render_template,request,session,redirect
 
 import mysql.connector
 from mysql.connector import errors
+from main_app.helper import __create_encryption
 
 try:
         mydb=mysql.connector.connect(host='45.76.160.243',user='babun',password='Babun_admin_mysql_1101_1998',database='babun_school')
@@ -29,7 +30,8 @@ def all_user_func():
                 user_email = session['user']['email']
                 try:
                         mycursor = mydb.cursor(dictionary=True)
-                        sql="SELECT stu_id, stu_name,stu_class FROM students "
+                        sql="SELECT DISTINCT stu_class FROM students "
+                        # val=('stu_class'),
                         mycursor.execute(sql)
                         user_details = mycursor.fetchall()
 
@@ -50,32 +52,46 @@ def all_user_func():
 def create_func():
         if request.method=='POST':
                 post_data=request.form
+                db_pass_to_save=__create_encryption(post_data['stu_pass'])
                 try:
                         mycursor=mydb.cursor(dictionary=True)
-                        sql='INSERT INTO students (stu_class,stu_name) VALUES (%s,%s)'
-                        val=(post_data['stu_class']),(post_data['stu_name']),
+                        sql='INSERT INTO students (stu_class,stu_email,stu_pass,stu_name,stu_result) VALUES (%s,%s,%s,%s,%s)'
+                        val=(post_data['stu_class']),(post_data['stu_email']),db_pass_to_save,(post_data['stu_name']),(post_data['stu_result'])
                         mycursor.execute(sql,val)
                         mydb.commit()
                         if (mycursor.rowcount==1):
-                                return 'data save'
+                               student_saved = True
                         else:
-                                return 'data not save'
+                               student_saved = False
+
+                        sql="SELECT stu_id ,stu_name FROM students"
+                        mycursor.execute(sql)
+                        student_list=mycursor.fetchall()
+                        return render_template('student.html',stu_list=student_list , new_stu_saved=student_saved)
+                
                 except errors.Error as e:
                         print("Db error :",e) 
                         return 'server error'
+       
+       
+       
         else:
-                return render_template('student.html')
+                mycursor=mydb.cursor(dictionary=True)
+                sql="SELECT stu_id ,stu_name FROM students"
+                mycursor.execute(sql)
+                student_list=mycursor.fetchall()
+                return render_template('student.html',stu_list=student_list , new_stu_saved = False)
 
-@app.route('/student_name/<int:stu_id>', methods=['GET']) 
-def perticular_blog(stu_id):
+@app.route('/class/<int:cls_id>', methods=['GET']) 
+def perticular_class(cls_id):
 
         if 'user' in session:
                 try:
                         
 
                         mycursor = mydb.cursor(dictionary=True)
-                        sql="SELECT stu_class,stu_name,stu_result FROM students WHERE stu_id= %s "
-                        val=(str(stu_id),)
+                        sql="SELECT stu_id,stu_name FROM students WHERE stu_class= %s "
+                        val=(str(cls_id),)
                         mycursor.execute(sql,val)
                         student_details = mycursor.fetchall()
                         if student_details == None:
@@ -92,3 +108,17 @@ def perticular_blog(stu_id):
                 
         else:
                 return redirect('/user/login')
+ 
+@app.route("/student/<int:stu_id>", methods=['GET'])
+def student_nam(stu_id):
+
+        mycursor = mydb.cursor(dictionary=True)
+        sql="SELECT stu_id,stu_email,stu_result FROM students WHERE stu_id= %s "
+        val=(str(stu_id),)
+        mycursor.execute(sql,val)
+        student_details = mycursor.fetchone()
+        if student_details == None:
+                return 'no blog found'
+        else:
+                return render_template('details.html',dt=student_details)
+                              

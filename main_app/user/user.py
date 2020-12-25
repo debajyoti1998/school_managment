@@ -24,14 +24,26 @@ def create_func():
                                 mycursor.execute(sql,val)
                                 mydb.commit()
                                 if (mycursor.rowcount==1):
-                                        return 'data save'
+                                        success_dis={
+                                                'message':'data save successfully'
+                                        }
+                                        return render_template('user/create.html',success=success_dis)
                                 else:
-                                        return 'data not save'
+                                        success_dis={
+                                                'message':'data not save'
+                                        }
+                                        return render_template('user/create.html',success=success_dis)
+                                        
+                                        
                         except errors.Error as e:
                                 print("Db error :",e) 
                                 return 'server error'
                 else:
-                        return 'please provide valid information'
+                        success_dis={
+                                'message':'please provide valid information'
+                        }
+                        return render_template('user/create.html',success=success_dis)
+                      
         else:
                 return render_template('user/create.html')
 
@@ -46,7 +58,10 @@ def login_func():
                         mycursor.execute(sql,val)
                         user_details = mycursor.fetchone()
                         if user_details == None:
-                                return 'no user found'
+                                error_dis={
+                                        'message':'no user found'
+                                }
+                                return render_template('user/login.html',error=error_dis)
                         else:
                                 if user_details['password'] ==__create_encryption(post_data['password']):
                                         session["user"] ={
@@ -56,7 +71,10 @@ def login_func():
                                         }
                                         return redirect('/')
                                 else:
-                                        return 'email not match' 
+                                        error_message={
+                                        'message':'email or password wrong'
+                                        }
+                                        return render_template('user/login.html',error_mess=error_message)
                 except errors.Error as e:
                         print("Db error :",e) 
                         return 'server error'

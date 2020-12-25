@@ -7,15 +7,29 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="/static/style.css">
     <title>Hello, world!</title>
   </head>
   <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+ 
+
+      <div class='container'>
+        <button type="button" class="btn btn-success btn-lg btn-block"><b>CONTAI POLYTECHNIC COLLEGE</b></button>
+      </div>
+        </ul>
+  
+  
+        <div style="text-align: right;">
+          <a href='/user/logout'><button type="button" class="btn btn-warning"><b>logout</b></button></a>
+        </div> 
+      </div>
+    </nav>
 
   
 
 
- 
+<div class=beauti>
 
 <div class='container'>
 <form method='POST'>
@@ -24,15 +38,53 @@
     <input type="number" name='stu_class' class="form-control" placeholder="enter class">
    
   <div class="form-group">
+    <label for="exampleInputv">students email </label>
+    <input type="text" name='stu_email' class="form-control" placeholder="enter student email">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">student password </label>
+    <input type="text" name='stu_pass' class="form-control" placeholder="enter student one time password">
+  </div>
+  <div class="form-group">
     <label for="exampleInputPassword1">student name </label>
     <input type="text" name='stu_name' class="form-control" placeholder="enter student name">
   </div>
-
+  <div class="form-group">
+    <label for="exampleInputPassword1">student result </label>
+    <input type="number" name='stu_result' class="form-control" placeholder="enter student result">
+  </div>
 
   
 
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+
+
+{% if new_stu_saved	 %}
+<p style="color: green;text-align: center;font-size: 20px;border: solid 1px;margin: 10px;background-color: #e7c872;"> 
+  new student saved successfully
+</p>
+{% endif %}
+
+
+
+
+
+{% if  stu_list|length >0	 %}
+<table>
+   {% for a in stu_list %}
+  
+
+   <tr>
+     <td>   <span class="badge rounded-pill bg-success">{{a['stu_id']}}  </td></span>
+     <td><h4>{{a['stu_name']}}</h4>  </td>
+
+   </tr>
+   {% endfor %}
+</table>
+{% endif %}
+</div>
 </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

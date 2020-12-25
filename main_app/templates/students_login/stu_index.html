@@ -1,27 +1,16 @@
-<table class="table table-hover">
-        <thead>
-          {% for a in data %}
-            <!-- {% if  a['stu_class']!="" and a['stu_name']!=""	 %} -->
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="card mb-4 shadow-sm">
-                 <!-- <img src=' https://source.unsplash.com/300x400/?school'>                      -->
-                    <div class="card-body">
-                      <p class="card-text">{{ a['stu_name']}} {{ a['stu_result']}}</b></p></h3>
-                      <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-<!--                           
-                        <a href="/student_name/{{ a['stu_id']}}"><button type="button" class="btn btn-sm btn-outline-secondary">check student list</button></a> 
-                        -->
-    
-                    </div>
-                  </div>
-                </div>
-          
-        </thead>
-        <tbody>
-            {% endif %}
-             
-          {% endfor %}
-         </tbody>
-      </table>
+<!DOCTYPE html>
+<html lang="en"  style="
+background-color:greenyellow;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+    <a href='/students/login'><button type='button' class='btn btn-primary'>logout </button></a>
+
+ <h1>student name= {{ data['stu_name'] }},<br>
+   result= {{ data['stu_result'] }}</h1>
+</body>
+</html>
